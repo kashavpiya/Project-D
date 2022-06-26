@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private string GROUND_TAG = "Ground";
 
+    private string ENEMY_TAG = "Enemy";
+
     [SerializeField]
     private Rigidbody2D myBody;
 
@@ -34,11 +36,13 @@ public class PlayerMovement : MonoBehaviour
 
     private string SLIDE_ANIMATION = "Slide";
 
+    private ScoreManager theScoreManager;
+
     private void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
+        theScoreManager = FindObjectOfType<ScoreManager>();
         sr = GetComponent<SpriteRenderer>();
     }
 
@@ -101,6 +105,13 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
             anim.SetBool(JUMP_ANIMATION, false);
+        
+        }
+
+        if (collision.gameObject.CompareTag(ENEMY_TAG))
+        {
+            Destroy(gameObject);
+            theScoreManager.scoreIncreasing = false;
         }
     }
 
