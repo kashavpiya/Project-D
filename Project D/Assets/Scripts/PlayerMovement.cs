@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float Slidetime = 1f;
+
 
     [SerializeField]
     private float jumpForce = 10f;
@@ -36,7 +38,13 @@ public class PlayerMovement : MonoBehaviour
 
     private string SLIDE_ANIMATION = "Slide";
 
+    private string DEAD_ANIMATION = "Dead";
+
     private ScoreManager theScoreManager;
+
+    private bool gameIsPaused = false;
+
+
 
     private void Awake()
     {
@@ -59,13 +67,37 @@ public class PlayerMovement : MonoBehaviour
         jumpPlayer();
         AnimatePlayer();
         slidePlayer();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameIsPaused = !gameIsPaused;
+            PauseGame();
+        }
+    }
+
+    void PauseGame()
+    {
+        if (gameIsPaused)
+        {
+            Time.timeScale = 0f;
+            
+        }
+        else
+        {
+            Time.timeScale = 1;
+            
+        }
     }
 
     void movePlayer()
     {
-        movementX = Input.GetAxisRaw("Horizontal");
+        if (theScoreManager.scoreIncreasing == true)
+        {
+            movementX = Input.GetAxisRaw("Horizontal");
 
-        transform.position += new Vector3(movementX, 0f, 0f) * Time.deltaTime * movementSpeed;
+            transform.position += new Vector3(movementX, 0f, 0f) * Time.deltaTime * movementSpeed;
+        }
+       
     }
 
     void jumpPlayer()
@@ -105,15 +137,36 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
             anim.SetBool(JUMP_ANIMATION, false);
+
         
         }
 
         if (collision.gameObject.CompareTag(ENEMY_TAG))
         {
-            Destroy(gameObject);
             theScoreManager.scoreIncreasing = false;
+            anim.SetBool(DEAD_ANIMATION, true);
+            Destroy(gameObject, 2.0f);
+            
+
+
+
         }
+
+        if (theScoreManager.scoreIncreasing == false)
+        {
+            StartCoroutine(dead());
+        }
+
     }
+
+    IEnumerator dead()
+    {
+        yield return new WaitForSeconds(3f);
+        //gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+        gameObject.GetComponent<Rigidbody2D>().simulated = false;
+       
+    }
+
 
     void AnimatePlayer()
     {

@@ -126,6 +126,7 @@ MonoBehaviour:
   Slidetime: 0.8
   jumpForce: 7
   myBody: {fileID: 0}
+  Esc: {fileID: 7417389552564376733, guid: ec81101d5241fb14d8da82bb1da0d408, type: 3}
 --- !u!70 &6288978938321406426
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

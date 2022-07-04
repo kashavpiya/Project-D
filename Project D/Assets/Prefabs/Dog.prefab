@@ -142,6 +142,7 @@ MonoBehaviour:
   Slidetime: 0.8
   jumpForce: 7
   myBody: {fileID: 5166533652477049495}
+  Esc: {fileID: 7417389552564376733, guid: ec81101d5241fb14d8da82bb1da0d408, type: 3}
 --- !u!95 &5166533652477049493
 Animator:
   serializedVersion: 4
