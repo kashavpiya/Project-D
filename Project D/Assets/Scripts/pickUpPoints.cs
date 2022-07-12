@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class pickUpPoints : MonoBehaviour
 {
-
+    public AudioSource source;
+    public AudioClip audioClip;
     public int scorePerGem;
 
     private ScoreManager theScoreManager;
@@ -28,7 +29,14 @@ public class pickUpPoints : MonoBehaviour
         if (other.gameObject.CompareTag(PLAYER_TAG))
         {
             theScoreManager.AddPoints(scorePerGem);
+            playClip();
             Destroy(gameObject);
         }
+    }
+
+    public void playClip()
+    {
+        source.clip = audioClip;
+        source.Play();
     }
 }

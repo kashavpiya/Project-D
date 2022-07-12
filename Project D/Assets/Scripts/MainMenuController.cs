@@ -11,18 +11,38 @@ public class MainMenuController : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("CharacterSelect");
+        StartCoroutine(DelayButtonPlayGame());
+        
     }
 
+    IEnumerator DelayButtonPlayGame()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("CharacterSelect");
+    }
     
 
     public void goHome()
     {
+        StartCoroutine(DelayButtonGoHome());
+        
+    }
+
+    IEnumerator DelayButtonGoHome()
+    {
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("MainMenu");
     }
 
     public void exitGame()
     {
+        StartCoroutine(DelayQuitting());
+        
+    }
+
+    IEnumerator DelayQuitting()
+    {
+        yield return new WaitForSeconds(1);
         Application.Quit();
     }
 

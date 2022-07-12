@@ -14,6 +14,26 @@ public class CharacterSelectController : MonoBehaviour
 
         GameManager.instance.CharIndex = selectedChar;
 
+        StartCoroutine(DelaySelect());
+
+        
+    }
+
+    IEnumerator DelaySelect()
+    {
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("Gameplay");
+    }
+
+    public void goHome()
+    {
+        StartCoroutine(DelayButtonGoHome());
+
+    }
+
+    IEnumerator DelayButtonGoHome()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("MainMenu");
     }
 }

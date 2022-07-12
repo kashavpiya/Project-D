@@ -29,9 +29,9 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1, 5));
+            yield return new WaitForSeconds(Random.Range(3, 7));
 
-            randomIndex = 0;
+            randomIndex = Random.Range(0, 3);
             randomSide = Random.Range(0, 2);
 
             spawnedBot = Instantiate(botReference[randomIndex]);
@@ -40,12 +40,22 @@ public class EnemySpawner : MonoBehaviour
             {
                 spawnedBot.transform.position = leftPos.position;
                 spawnedBot.GetComponent<EnemyMovement>().speed = Random.Range(4, 7);
+                if (randomIndex == 1)
+                {
+                    spawnedBot.transform.localScale = new Vector3(-0.3f, 0.3f, 1f);
+                }
             }
             else
             {
                 spawnedBot.transform.position = rightPos.position;
                 spawnedBot.GetComponent<EnemyMovement>().speed = -Random.Range(4, 7);
-                spawnedBot.transform.localScale = new Vector3(-0.5f, 0.3f, 1f);
+                if (randomIndex == 0 || randomIndex == 2)
+                {
+                    spawnedBot.transform.localScale = new Vector3(-0.5f, 0.3f, 1f);
+                }
+                
+                    
+
             }
         } //while
 
