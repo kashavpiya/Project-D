@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public AudioSource jumpSound;
+    public AudioSource deathSound;
+
 
     private float movementX;
 
@@ -108,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
             
             anim.SetBool(JUMP_ANIMATION, true);
             myBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            jumpSound.Play();
 
         }
     }
@@ -146,6 +150,8 @@ public class PlayerMovement : MonoBehaviour
             theScoreManager.scoreIncreasing = false;
             anim.SetBool(DEAD_ANIMATION, true);
             Destroy(gameObject, 2.0f);
+            deathSound.Play();
+            StartCoroutine(goBackToHome());
             
 
 
@@ -184,5 +190,11 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool(WALK_ANIMATION, false);
         }
+    }
+
+    IEnumerator goBackToHome()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("MainMenu");
     }
 }

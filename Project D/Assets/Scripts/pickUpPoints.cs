@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class pickUpPoints : MonoBehaviour
 {
-    public AudioSource source;
-    public AudioClip audioClip;
+    private AudioSource CoinSound;
     public int scorePerGem;
 
     private ScoreManager theScoreManager;
@@ -16,12 +15,14 @@ public class pickUpPoints : MonoBehaviour
     void Start()
     {
         theScoreManager = FindObjectOfType<ScoreManager>();
+
+        CoinSound = GameObject.Find("coinSound").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -29,14 +30,9 @@ public class pickUpPoints : MonoBehaviour
         if (other.gameObject.CompareTag(PLAYER_TAG))
         {
             theScoreManager.AddPoints(scorePerGem);
-            playClip();
+            CoinSound.Play();
             Destroy(gameObject);
         }
     }
 
-    public void playClip()
-    {
-        source.clip = audioClip;
-        source.Play();
-    }
 }

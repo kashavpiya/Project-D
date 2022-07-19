@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Collector : MonoBehaviour
 {
+    
+    public AudioSource deathSound;
     private ScoreManager theScoreManager;
 
     private string PLAYER_TAG = "Player";
@@ -25,7 +28,15 @@ public class Collector : MonoBehaviour
         {
             theScoreManager.scoreIncreasing = false;
             Destroy(collision.gameObject);
+            deathSound.Play();
+            StartCoroutine(goBackToHome());
         }
        
+    }
+
+    IEnumerator goBackToHome()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("MainMenu");
     }
 }
